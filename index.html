@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="sk"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow"><title>Od tendra k špecifikácii – cvičenia | IT Learning</title>
+<link rel="icon" href="assets/logo-itlearning.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Semi+Condensed:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--soft:#F5FAFF;--line:#D6E6F4;--blue:#1266A3;--sky:#179CFA;--ink:#0F2B44;--muted:#557089;--tok:#E3F1FD;
+ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:calc(70px + env(safe-area-inset-top,0px));scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.55 Barlow,"Segoe UI",Arial,sans-serif}
+h1,h2,h3{font-family:"Barlow Semi Condensed",Barlow,"Segoe UI",Arial,sans-serif;line-height:1.15;margin:0}
+a{color:var(--blue)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 22px}
+header.top{background:var(--soft);border-bottom:1px solid var(--line)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:10px;padding-bottom:10px}
+header.top img{height:76px;width:auto;display:block}
+header.top .kurz{color:var(--muted);font-size:15px;text-align:right}
+.hero{padding-top:44px;padding-bottom:26px}
+.hero h1{font-size:clamp(34px,5vw,50px);color:var(--blue);font-weight:700}
+.hero .sub{font-size:20px;margin:8px 0 18px;color:var(--ink)}
+.hero p{max-width:68ch;color:var(--muted);margin:0}
+.kroky{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin:28px 0 0;padding:0;list-style:none;counter-reset:k;border-top:3px solid var(--blue)}
+.kroky li{counter-increment:k;padding:16px 18px 6px 0}
+.kroky li::before{content:counter(k);font:700 30px/1 "Barlow Semi Condensed",sans-serif;color:var(--sky);display:block;margin-bottom:6px}
+.kroky b{display:block;font-weight:600}
+.kroky span{color:var(--muted);font-size:15.5px}
+.ctx{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:22px 24px;margin:30px 0 10px}
+.ctx h2{font-size:26px;color:var(--blue)}
+.ctx p.note{color:var(--muted);margin:4px 0 14px;font-size:15.5px}
+.presets{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px}
+.presets button{font:500 15px Barlow,sans-serif;border:1px solid var(--blue);background:#fff;color:var(--blue);padding:6px 14px;border-radius:999px;cursor:pointer}
+.presets button[aria-pressed="true"]{background:var(--blue);color:#fff}
+.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px}
+.fields label{display:block;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:3px}
+.fields input{width:100%;font:400 16px Barlow,sans-serif;padding:8px 10px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
+.fields input:focus{outline:2px solid var(--sky);outline-offset:0;border-color:var(--sky)}
+.fields .full{grid-column:1/-1}
+nav.moduly{position:sticky;top:0;z-index:5;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+nav.moduly .wrap{display:flex;align-items:center;gap:6px;overflow-x:auto;padding-top:10px;padding-bottom:10px}
+nav.moduly a{white-space:nowrap;text-decoration:none;color:var(--ink);font-weight:500;padding:6px 12px;border-radius:6px;font-size:15.5px}
+nav.moduly a:hover,nav.moduly a:focus-visible{background:var(--soft);color:var(--blue)}
+nav.moduly a b{color:var(--sky);margin-right:4px}
+nav.moduly .sp{flex:1}
+nav.moduly label{white-space:nowrap;font-size:15px;display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--blue);font-weight:600}
+section.modul{padding:46px 0 10px}
+.mhead{display:grid;grid-template-columns:auto 1fr;gap:4px 18px;align-items:baseline;border-bottom:3px solid var(--blue);padding-bottom:14px}
+.mhead .num{grid-row:span 2;font:700 64px/0.9 "Barlow Semi Condensed",sans-serif;color:var(--sky)}
+.mhead h2{font-size:32px;color:var(--blue)}
+.mhead p{margin:0;color:var(--muted)}
+h3.kat{font-size:21px;color:var(--ink);margin:30px 0 4px}
+article.pr{border-bottom:1px solid var(--line);padding:20px 0 22px}
+.prhead{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 12px}
+.prhead .id{font:700 18px "Barlow Semi Condensed",sans-serif;color:var(--sky);min-width:30px}
+.prhead h4{margin:0;font:600 20px/1.25 Barlow,sans-serif;color:var(--ink)}
+.badge{font-size:13.5px;padding:2px 9px;border-radius:999px;background:var(--soft);border:1px solid var(--line);color:var(--blue);font-weight:500}
+.badge.zak{background:var(--blue);border-color:var(--blue);color:#fff}
+.pbox{position:relative;margin:12px 0 10px;background:var(--soft);border-left:4px solid var(--blue);border-radius:0 8px 8px 0}
+.pbox pre{margin:0;padding:16px 18px 16px 18px;white-space:pre-wrap;word-wrap:break-word;font:400 16px/1.55 Barlow,"Segoe UI",Arial,sans-serif;color:var(--ink);max-height:none}
+.tok{background:var(--tok);color:var(--blue);font-weight:600;border-radius:4px;padding:0 3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.tok.empty{color:#9a5a00;background:#FFF4E0}
+.copy{font:600 15px Barlow,sans-serif;background:var(--blue);color:#fff;border:0;border-radius:6px;padding:7px 16px;cursor:pointer}
+.copy:hover{background:#0d5487}.copy.ok{background:#1b8a4e}
+.copy:focus-visible,.presets button:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
+.akcie{display:flex;justify-content:flex-end;margin-top:-4px}
+.det{display:grid;grid-template-columns:1fr 1fr;gap:6px 28px;margin-top:10px;font-size:15.5px}
+.det h5{margin:8px 0 2px;font-size:14px;color:var(--blue);font-weight:600}
+.det ol{margin:0;padding-left:20px}
+.det p{margin:0;color:var(--ink)}
+.det .files a{display:inline-block;margin:0 10px 2px 0}
+.det .bez{color:var(--muted)}
+body.len-zaklad article.pr:not(.jadro){display:none}
+body.len-zaklad h3.kat.prazdna{display:none}
+.mat{padding-top:56px;padding-bottom:20px}
+.mat h2{font-size:32px;color:var(--blue);border-bottom:3px solid var(--blue);padding-bottom:12px}
+.mat p{color:var(--muted);max-width:70ch}
+.zip{display:inline-block;margin:6px 0 18px;background:var(--blue);color:#fff;text-decoration:none;font-weight:600;padding:10px 20px;border-radius:6px}
+.zip:hover{background:#0d5487}
+.flist{width:100%;border-collapse:collapse;font-size:16px}
+.flist td{border-bottom:1px solid var(--line);padding:9px 8px 9px 0;vertical-align:top}
+.flist td:first-child{white-space:nowrap}
+.tbl{overflow-x:auto}
+footer{margin-top:40px;background:var(--soft);border-top:1px solid var(--line);padding:24px 0;color:var(--muted);font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;gap:10px 28px;justify-content:space-between}
+@media (max-width:760px){
+ .kroky{grid-template-columns:1fr}.fields{grid-template-columns:1fr}.det{grid-template-columns:1fr}
+ header.top img{height:54px}header.top .kurz{display:none}
+ .mhead .num{font-size:48px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+.files a{display:inline-block;margin:0 16px 4px 0}
+nav.moduly a b{margin-right:6px}
+.lekt{display:inline-block;background:#FDE5E7;color:#9b1c2c;border:1px solid #f3b6be;font-weight:600;font-size:14px;padding:3px 12px;border-radius:999px;margin-top:10px}
+.tab{width:100%;border-collapse:collapse;font-size:16px;margin:14px 0 6px}
+.tab th{background:var(--blue);color:#fff;text-align:left;font-weight:600;padding:9px 10px}
+.tab td{border-bottom:1px solid var(--line);padding:9px 10px;vertical-align:top}
+.tab tr:nth-child(even) td{background:var(--soft)}
+.card{border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:18px 0;background:#fff}
+.card h4{margin:0 0 4px;font:600 21px/1.25 Barlow,sans-serif;color:var(--ink)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 10px;margin:6px 0 10px}
+.k{font-weight:600;color:var(--blue);font-size:14px;margin:12px 0 2px}
+ul.chk{margin:4px 0 0;padding-left:20px}
+.note{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:14px 18px;margin:16px 0}
+.warn{background:#FFF4E0;border-color:#f3d3a0}
+.var{display:flex;align-items:center;gap:8px;margin:14px 0 -4px;font:600 15px Barlow,sans-serif}
+.var .lbl{font-size:13.5px;padding:2px 10px;border-radius:999px;background:var(--blue);color:#fff}
+.var .lbl.vy{background:#fff;color:var(--blue);border:1px solid var(--blue)}
+@media print{nav.moduly,.copy{display:none}.card{break-inside:avoid}}
+</style></head><body>
+<header class="top"><div class="wrap"><a href="https://www.itlearning.sk"><img src="assets/logo-itlearning.png" alt="IT Learning Slovakia"></a>
+<div class="kurz">Kurz Využitie umelej inteligencie pre analytikov v praxi</div></div></header>
+<main><div class="wrap hero"><h1>Od tendra k špecifikácii</h1>
+<p class="sub">Využitie umelej inteligencie pre analytikov v praxi · blok s reálnym tendrom</p>
+<p>Pracujete s verejnými súťažnými podkladmi k dodaniu Integrovaného informačného systému ÚVZ. Každá skupina spracuje systém IS Test zdravé srdce (OUT_13) na inej úrovni špecifikácie. Postup v štyroch krokoch je rovnaký pre všetky skupiny a použijete ho na každý ďalší tender.</p>
+<ol class="kroky"><li><b>Stiahnite si podklady</b><span>Pri vašej skupine sú uvedené súbory, ktoré priložíte do nástroja.</span></li>
+<li><b>Kroky 1 až 4</b><span>Kroky robte v jednom rozhovore za sebou, každý nadväzuje na predchádzajúci.</span></li>
+<li><b>Overte pokrytie</b><span>Krok 4 ukáže, čo ste vynechali. Výsledok predstavíte ostatným.</span></li></ol></div>
+<nav class="moduly"><div class="wrap"><a href="#sk1"><b>1</b>Rámcová špecifikácia</a><a href="#sk2"><b>2</b>Detailná funkčná špecifikácia</a><a href="#sk3"><b>3</b>Detailná technická špecifikácia</a><a href="#skMIS"><b>MIS</b>dátový model a kvalita dát</a><a href="#podklady">Podklady</a></div></nav><section class="modul wrap" id="sk1"><div class="mhead"><span class="num">1</span><h2>Rámcová špecifikácia</h2><p>Navrhnite rámcovú špecifikáciu systému IS Test zdravé srdce podľa bodu 6.1.2: biznis, aplikačnú, dátovú a systémovú architektúru. Bod súťažných podkladov: 6.1.2.</p></div>
+<div class="note"><b>Podklady pre vašu skupinu:</b><p class="files" style="margin:6px 0 0"><a href="subory/01_IS_Test_zdrave_srdce_OUT13_str121-124.pdf" download>01_IS_Test_zdrave_srdce_OUT13_str121-124.pdf</a><a href="subory/02_Projektove_vystupy_kap6_str138-142.pdf" download>02_Projektove_vystupy_kap6_str138-142.pdf</a></p></div>
+<article class="pr"><div class="prhead"><span class="id">1</span><h4>Inventúra požiadaviek</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>V prílohe je časť súťažných podkladov k informačnému systému pre verejnú správu: IS Test zdravé srdce (výstup OUT_13).
+
+Vytvor inventúru požiadaviek ako tabuľku so stĺpcami:
+ID | skrátené znenie | typ (funkčná, nefunkčná, bezpečnostná, integračná, migračná, reporting) | atomická (áno/nie) | testovateľná (áno/nie) | poznámka
+
+Pravidlá:
+– použi ID presne tak, ako sú v texte (OUT_13.FP_x), nič nevynechaj a nič nepridávaj
+– ak jedna požiadavka obsahuje viac vecí, označ ju ako neatomickú a navrhni rozdelenie
+– ak je formulácia vágna (napr. intuitívne, jednoduché, flexibilne), označ ju ako netestovateľnú a navrhni merateľné kritérium
+– parametre bez ID (napr. SLA) vypíš samostatne pod tabuľkou
+– na konci uveď počet požiadaviek a over, že sedí s posledným ID v texte</pre></div><div class="akcie"><button class="copy" type="button" data-p="k1">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">2</span><h4>Kostra dokumentu</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>Na základe inventúry a bodu 6.1.2 (príloha 02) navrhni osnovu rámcovej špecifikácie pre IS Test zdravé srdce.
+
+Osnova musí pokryť:
+– biznis architektúru (používatelia, funkcie, procesy, služby)
+– aplikačnú architektúru (komponenty, aplikácie, služby)
+– architektúru údajov (entity, vzťahy, tok údajov, vlastníctvo údajov)
+– systémovú architektúru (uzly, komunikácia, systémový softvér)
+
+Ku každej kapitole priraď ID požiadaviek, ktoré pokrýva. Zatiaľ nepíš obsah kapitol.</pre></div><div class="akcie"><button class="copy" type="button" data-p="g1_2">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">3</span><h4>Kapitola</h4><span class="badge">cca 8 min</span></div><div class="pbox"><pre>Napíš kapitolu Architektúra údajov:
+– zoznam údajových entít s hlavnými atribútmi
+– vzťahy medzi entitami
+– tok údajov medzi poradňami RÚVZ, ÚVZ SR a externými systémami
+– kto je vlastníkom ktorých údajov
+
+Pri každom tvrdení uveď ID požiadavky, z ktorej vychádzaš. Čo si musel predpokladať, označ slovom PREDPOKLAD.</pre></div><div class="akcie"><button class="copy" type="button" data-p="g1_3">Kopírovať prompt</button></div><div class="var"><span class="lbl vy">Výzva</span></div><div class="pbox"><pre>Priprav diagram biznis a aplikačnej vrstvy v PlantUML s knižnicou ArchiMate (!include &lt;archimate/Archimate&gt;) tak, aby sa dal vykresliť na plantuml.com. Použi len prvky, ktoré vychádzajú z požiadaviek OUT_13.</pre></div><div class="akcie"><button class="copy" type="button" data-p="g1_v">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">4</span><h4>Kontrola pokrytia</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>Zostav traceability maticu pre požiadavky OUT_13:
+ID požiadavky | kapitola, kde je pokrytá | pokrytie (úplné / čiastočné / žiadne)
+
+Potom:
+1. Vypíš všetky požiadavky z inventúry, ktoré nie sú pokryté nikde.
+2. Vypíš požiadavky pokryté len čiastočne a čo chýba.
+3. Navrhni najviac 5 otázok pre obstarávateľa, zoradených podľa vplyvu na rozsah a cenu.
+
+Nepridávaj požiadavky, ktoré v inventúre nie sú.</pre></div><div class="akcie"><button class="copy" type="button" data-p="k4">Kopírovať prompt</button></div></article>
+</section><section class="modul wrap" id="sk2"><div class="mhead"><span class="num">2</span><h2>Detailná funkčná špecifikácia</h2><p>Na základe pripravenej rámcovej špecifikácie rozpracujte proces vyšetrenia klienta do funkčnej špecifikácie podľa bodu 6.1.3. Bod súťažných podkladov: 6.1.3.</p></div>
+<div class="note"><b>Podklady pre vašu skupinu:</b><p class="files" style="margin:6px 0 0"><a href="subory/01_IS_Test_zdrave_srdce_OUT13_str121-124.pdf" download>01_IS_Test_zdrave_srdce_OUT13_str121-124.pdf</a><a href="subory/05_Ramcova_specifikacia_OUT13.docx" download>05_Ramcova_specifikacia_OUT13.docx</a></p></div>
+<article class="pr"><div class="prhead"><span class="id">1</span><h4>Inventúra požiadaviek</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>V prílohe je časť súťažných podkladov k informačnému systému pre verejnú správu: IS Test zdravé srdce (výstup OUT_13).
+
+Vytvor inventúru požiadaviek ako tabuľku so stĺpcami:
+ID | skrátené znenie | typ (funkčná, nefunkčná, bezpečnostná, integračná, migračná, reporting) | atomická (áno/nie) | testovateľná (áno/nie) | poznámka
+
+Pravidlá:
+– použi ID presne tak, ako sú v texte (OUT_13.FP_x), nič nevynechaj a nič nepridávaj
+– ak jedna požiadavka obsahuje viac vecí, označ ju ako neatomickú a navrhni rozdelenie
+– ak je formulácia vágna (napr. intuitívne, jednoduché, flexibilne), označ ju ako netestovateľnú a navrhni merateľné kritérium
+– parametre bez ID (napr. SLA) vypíš samostatne pod tabuľkou
+– na konci uveď počet požiadaviek a over, že sedí s posledným ID v texte</pre></div><div class="akcie"><button class="copy" type="button" data-p="k1">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">2</span><h4>Kostra dokumentu</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>Na základe priloženej rámcovej špecifikácie navrhni osnovu detailnej funkčnej špecifikácie pre proces „Vyšetrenie klienta v poradni zdravia“ od objednania po výstupný protokol.
+
+Štruktúra: biznis proces krok za krokom, use cases, popis funkcií, validačné pravidlá, návrh obrazoviek.
+Ku každej časti priraď ID požiadaviek, ktoré pokrýva. Zatiaľ nepíš obsah.</pre></div><div class="akcie"><button class="copy" type="button" data-p="g2_2">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">3</span><h4>Kapitola</h4><span class="badge">cca 8 min</span></div><div class="pbox"><pre>Rozpracuj use case „Zaznamenať výsledky vyšetrenia klienta“:
+– aktéri a predpoklady
+– hlavný scenár krok za krokom
+– alternatívne scenáre a výnimky
+– validačné pravidlá (FP_10, FP_12, FP_17)
+
+Pri každom kroku uveď ID požiadavky. Čo v zadaní chýba, označ ako OTÁZKA PRE OBSTARÁVATEĽA.</pre></div><div class="akcie"><button class="copy" type="button" data-p="g2_3">Kopírovať prompt</button></div><div class="var"><span class="lbl vy">Výzva</span></div><div class="pbox"><pre>Priprav diagram aktivít procesu „Vyšetrenie klienta v poradni zdravia“ v syntaxi Mermaid (flowchart) s plaveckými dráhami pre klienta, pracovníka poradne a systém. Diagram si zobrazíte na mermaid.live.</pre></div><div class="akcie"><button class="copy" type="button" data-p="g2_v">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">4</span><h4>Kontrola pokrytia</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>Zostav traceability maticu pre požiadavky OUT_13:
+ID požiadavky | kapitola, kde je pokrytá | pokrytie (úplné / čiastočné / žiadne)
+
+Potom:
+1. Vypíš všetky požiadavky z inventúry, ktoré nie sú pokryté nikde.
+2. Vypíš požiadavky pokryté len čiastočne a čo chýba.
+3. Navrhni najviac 5 otázok pre obstarávateľa, zoradených podľa vplyvu na rozsah a cenu.
+
+Nepridávaj požiadavky, ktoré v inventúre nie sú.</pre></div><div class="akcie"><button class="copy" type="button" data-p="k4">Kopírovať prompt</button></div></article>
+</section><section class="modul wrap" id="sk3"><div class="mhead"><span class="num">3</span><h2>Detailná technická špecifikácia</h2><p>Na základe pripravenej funkčnej špecifikácie navrhnite technickú špecifikáciu podľa bodu 6.1.4. Bod súťažných podkladov: 6.1.4.</p></div>
+<div class="note"><b>Podklady pre vašu skupinu:</b><p class="files" style="margin:6px 0 0"><a href="subory/01_IS_Test_zdrave_srdce_OUT13_str121-124.pdf" download>01_IS_Test_zdrave_srdce_OUT13_str121-124.pdf</a><a href="subory/02_Projektove_vystupy_kap6_str138-142.pdf" download>02_Projektove_vystupy_kap6_str138-142.pdf</a><a href="subory/06_Funkcna_specifikacia_OUT13.docx" download>06_Funkcna_specifikacia_OUT13.docx</a></p></div>
+<article class="pr"><div class="prhead"><span class="id">1</span><h4>Inventúra požiadaviek</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>V prílohe je časť súťažných podkladov k informačnému systému pre verejnú správu: IS Test zdravé srdce (výstup OUT_13).
+
+Vytvor inventúru požiadaviek ako tabuľku so stĺpcami:
+ID | skrátené znenie | typ (funkčná, nefunkčná, bezpečnostná, integračná, migračná, reporting) | atomická (áno/nie) | testovateľná (áno/nie) | poznámka
+
+Pravidlá:
+– použi ID presne tak, ako sú v texte (OUT_13.FP_x), nič nevynechaj a nič nepridávaj
+– ak jedna požiadavka obsahuje viac vecí, označ ju ako neatomickú a navrhni rozdelenie
+– ak je formulácia vágna (napr. intuitívne, jednoduché, flexibilne), označ ju ako netestovateľnú a navrhni merateľné kritérium
+– parametre bez ID (napr. SLA) vypíš samostatne pod tabuľkou
+– na konci uveď počet požiadaviek a over, že sedí s posledným ID v texte</pre></div><div class="akcie"><button class="copy" type="button" data-p="k1">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">2</span><h4>Kostra dokumentu</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>Na základe priloženej funkčnej špecifikácie a bodu 6.1.4 (príloha 02) navrhni osnovu detailnej technickej špecifikácie pre IS Test zdravé srdce.
+
+Osnova musí pokryť všetky časti, ktoré bod 6.1.4 vyžaduje. Ku každej kapitole priraď ID požiadaviek.
+Na konci vypíš, ktoré časti bodu 6.1.4 sa v tejto fáze spracovať nedajú a prečo (napr. zdrojový kód).</pre></div><div class="akcie"><button class="copy" type="button" data-p="g3_2">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">3</span><h4>Kapitola</h4><span class="badge">cca 8 min</span></div><div class="pbox"><pre>Napíš kapitolu Cieľová architektúra a výkonnostné predpoklady:
+– komponenty riešenia a prostredia (vývoj, test, predprodukcia, produkcia vo vládnom cloude)
+– integrácie (FP_29, FP_30, FP_44, FP_45)
+– správa používateľov a autentifikácia (FP_8, FP_13, FP_16)
+– výkonnostné predpoklady pre SLA: 200 používateľov, prevádzka 8x5, dostupnosť údajov 24x7, RTO 1 týždeň
+
+Neuvádzaj konkrétne produkty, ktoré nie sú v podkladoch. Chýbajúce parametre (napr. RPO, doba odozvy) uveď ako otázky.</pre></div><div class="akcie"><button class="copy" type="button" data-p="g3_3">Kopírovať prompt</button></div><div class="var"><span class="lbl vy">Výzva</span></div><div class="pbox"><pre>Priprav sekvenčný diagram v PlantUML pre zaslanie výstupného protokolu klientovi (FP_42) a poskytnutie dát cez verejné API (FP_44). Pri API vyznač, kde sa musia riešiť osobné údaje.</pre></div><div class="akcie"><button class="copy" type="button" data-p="g3_v">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">4</span><h4>Kontrola pokrytia</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>Zostav traceability maticu pre požiadavky OUT_13:
+ID požiadavky | kapitola, kde je pokrytá | pokrytie (úplné / čiastočné / žiadne)
+
+Potom:
+1. Vypíš všetky požiadavky z inventúry, ktoré nie sú pokryté nikde.
+2. Vypíš požiadavky pokryté len čiastočne a čo chýba.
+3. Navrhni najviac 5 otázok pre obstarávateľa, zoradených podľa vplyvu na rozsah a cenu.
+
+Nepridávaj požiadavky, ktoré v inventúre nie sú.</pre></div><div class="akcie"><button class="copy" type="button" data-p="k4">Kopírovať prompt</button></div></article>
+</section><section class="modul wrap" id="skMIS"><div class="mhead"><span class="num">MIS</span><h2>MIS: dátový model a kvalita dát</h2><p>Pre MIS analytikov: odvoďte z požiadaviek dátový model pre reporting, pravidlá kvality dát a dopad zmeny na MIS. Bod súťažných podkladov: 4.4.1.</p></div>
+<div class="note"><b>Podklady pre vašu skupinu:</b><p class="files" style="margin:6px 0 0"><a href="subory/01_IS_Test_zdrave_srdce_OUT13_str121-124.pdf" download>01_IS_Test_zdrave_srdce_OUT13_str121-124.pdf</a><a href="subory/03_Reporting_a_MDM_OUT19_str131-133.pdf" download>03_Reporting_a_MDM_OUT19_str131-133.pdf</a></p></div>
+<article class="pr"><div class="prhead"><span class="id">1</span><h4>Inventúra požiadaviek</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>V prílohe je časť súťažných podkladov k informačnému systému pre verejnú správu: IS Test zdravé srdce (výstup OUT_13).
+
+Vytvor inventúru požiadaviek ako tabuľku so stĺpcami:
+ID | skrátené znenie | typ (funkčná, nefunkčná, bezpečnostná, integračná, migračná, reporting) | atomická (áno/nie) | testovateľná (áno/nie) | poznámka
+
+Pravidlá:
+– použi ID presne tak, ako sú v texte (OUT_13.FP_x), nič nevynechaj a nič nepridávaj
+– ak jedna požiadavka obsahuje viac vecí, označ ju ako neatomickú a navrhni rozdelenie
+– ak je formulácia vágna (napr. intuitívne, jednoduché, flexibilne), označ ju ako netestovateľnú a navrhni merateľné kritérium
+– parametre bez ID (napr. SLA) vypíš samostatne pod tabuľkou
+– na konci uveď počet požiadaviek a over, že sedí s posledným ID v texte</pre></div><div class="akcie"><button class="copy" type="button" data-p="k1">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">2</span><h4>Dátový model</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>Navrhni dátový model pre reporting IS Test zdravé srdce ako hviezdicovú schému:
+– faktové tabuľky a ich granularita
+– dimenzie s hlavnými atribútmi
+– ktoré požiadavky model pokrýva (najmä FP_22, FP_25, FP_27, FP_34, FP_38, FP_48)
+
+Zohľadni, že reporting sa podľa prílohy 03 integruje na MDM a údajové základne jednotlivých IS.</pre></div><div class="akcie"><button class="copy" type="button" data-p="gMIS_2">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">3</span><h4>Pravidlá kvality dát</h4><span class="badge">cca 8 min</span></div><div class="pbox"><pre>Prepíš požiadavky FP_10 a FP_12 na pravidlá kvality dát:
+pravidlo | kontrolovaný atribút | logika kontroly | závažnosť | kde sa kontroluje (zdrojový systém, ETL, MDM)
+
+Doplň 5 ďalších pravidiel, ktoré z dát vyplývajú, a označ ich ako NÁVRH.</pre></div><div class="akcie"><button class="copy" type="button" data-p="gMIS_3">Kopírovať prompt</button></div><div class="var"><span class="lbl vy">Výzva</span></div><div class="pbox"><pre>Predpokladaj, že sa do vyšetrenia pridá nový ukazovateľ (biochemický parameter s kritickými hodnotami podľa veku a pohlavia, FP_17).
+
+Opíš dopad zmeny na zdrojový systém, ETL, MDM, kocku a reporty a navrhni kontrolný zoznam na overenie konzistencie po nasadení zmeny.</pre></div><div class="akcie"><button class="copy" type="button" data-p="gMIS_v">Kopírovať prompt</button></div></article>
+<article class="pr"><div class="prhead"><span class="id">4</span><h4>Kontrola pokrytia</h4><span class="badge">cca 5 min</span></div><div class="pbox"><pre>Zostav traceability maticu pre požiadavky OUT_13:
+ID požiadavky | kapitola, kde je pokrytá | pokrytie (úplné / čiastočné / žiadne)
+
+Potom:
+1. Vypíš všetky požiadavky z inventúry, ktoré nie sú pokryté nikde.
+2. Vypíš požiadavky pokryté len čiastočne a čo chýba.
+3. Navrhni najviac 5 otázok pre obstarávateľa, zoradených podľa vplyvu na rozsah a cenu.
+
+Nepridávaj požiadavky, ktoré v inventúre nie sú.</pre></div><div class="akcie"><button class="copy" type="button" data-p="k4">Kopírovať prompt</button></div></article>
+</section><div class="wrap mat" id="podklady"><h2>Podklady</h2>
+<p>Súťažné podklady sú verejne dostupné. Výrezy obsahujú len strany potrebné pre vašu skupinu, s celým dokumentom sa pracuje pomalšie a niektoré nástroje ho nenačítajú celý.</p>
+<a class="zip" href="subory/podklady-tender-vsetko.zip" download>Stiahnuť všetky podklady (ZIP)</a>
+<div class="tbl"><table class="flist"><tr><td><a href="subory/01_IS_Test_zdrave_srdce_OUT13_str121-124.pdf" download>01_IS_Test_zdrave_srdce_OUT13_str121-124.pdf</a></td><td>Opis systému IS Test zdravé srdce (OUT_13), strany 121 až 124</td></tr><tr><td><a href="subory/02_Projektove_vystupy_kap6_str138-142.pdf" download>02_Projektove_vystupy_kap6_str138-142.pdf</a></td><td>Požiadavky na projektové výstupy, body 6.1.2 až 6.1.4, strany 138 až 142</td></tr><tr><td><a href="subory/03_Reporting_a_MDM_OUT19_str131-133.pdf" download>03_Reporting_a_MDM_OUT19_str131-133.pdf</a></td><td>Systém zberu, vyhodnocovania a reportingu, MDM (OUT_19), strany 131 až 133</td></tr><tr><td><a href="subory/04_Zoznam_vystupov_a_legislativa_str32-38.pdf" download>04_Zoznam_vystupov_a_legislativa_str32-38.pdf</a></td><td>Zoznam výstupov projektu a legislatíva, strany 32 až 38</td></tr><tr><td><a href="subory/05_Ramcova_specifikacia_OUT13.docx" download>05_Ramcova_specifikacia_OUT13.docx</a></td><td>Pripravená rámcová špecifikácia (vstup pre skupinu 2)</td></tr><tr><td><a href="subory/06_Funkcna_specifikacia_OUT13.docx" download>06_Funkcna_specifikacia_OUT13.docx</a></td><td>Pripravená funkčná špecifikácia (vstup pre skupinu 3)</td></tr><tr><td><a href="subory/Sutazne_podklady_IS_UVZ_cely.pdf" download>Sutazne_podklady_IS_UVZ_cely.pdf</a></td><td>Celé súťažné podklady, 163 strán, na nahliadnutie</td></tr></table></div></div></main>
+<footer><div class="wrap"><span>IT Learning Slovakia – kurz Využitie umelej inteligencie pre analytikov v praxi</span><span><a href="https://www.itlearning.sk">itlearning.sk</a></span></div></footer>
+<script>
+const P={"k1": "V prílohe je časť súťažných podkladov k informačnému systému pre verejnú správu: IS Test zdravé srdce (výstup OUT_13).\n\nVytvor inventúru požiadaviek ako tabuľku so stĺpcami:\nID | skrátené znenie | typ (funkčná, nefunkčná, bezpečnostná, integračná, migračná, reporting) | atomická (áno/nie) | testovateľná (áno/nie) | poznámka\n\nPravidlá:\n– použi ID presne tak, ako sú v texte (OUT_13.FP_x), nič nevynechaj a nič nepridávaj\n– ak jedna požiadavka obsahuje viac vecí, označ ju ako neatomickú a navrhni rozdelenie\n– ak je formulácia vágna (napr. intuitívne, jednoduché, flexibilne), označ ju ako netestovateľnú a navrhni merateľné kritérium\n– parametre bez ID (napr. SLA) vypíš samostatne pod tabuľkou\n– na konci uveď počet požiadaviek a over, že sedí s posledným ID v texte", "k4": "Zostav traceability maticu pre požiadavky OUT_13:\nID požiadavky | kapitola, kde je pokrytá | pokrytie (úplné / čiastočné / žiadne)\n\nPotom:\n1. Vypíš všetky požiadavky z inventúry, ktoré nie sú pokryté nikde.\n2. Vypíš požiadavky pokryté len čiastočne a čo chýba.\n3. Navrhni najviac 5 otázok pre obstarávateľa, zoradených podľa vplyvu na rozsah a cenu.\n\nNepridávaj požiadavky, ktoré v inventúre nie sú.", "g1_2": "Na základe inventúry a bodu 6.1.2 (príloha 02) navrhni osnovu rámcovej špecifikácie pre IS Test zdravé srdce.\n\nOsnova musí pokryť:\n– biznis architektúru (používatelia, funkcie, procesy, služby)\n– aplikačnú architektúru (komponenty, aplikácie, služby)\n– architektúru údajov (entity, vzťahy, tok údajov, vlastníctvo údajov)\n– systémovú architektúru (uzly, komunikácia, systémový softvér)\n\nKu každej kapitole priraď ID požiadaviek, ktoré pokrýva. Zatiaľ nepíš obsah kapitol.", "g1_3": "Napíš kapitolu Architektúra údajov:\n– zoznam údajových entít s hlavnými atribútmi\n– vzťahy medzi entitami\n– tok údajov medzi poradňami RÚVZ, ÚVZ SR a externými systémami\n– kto je vlastníkom ktorých údajov\n\nPri každom tvrdení uveď ID požiadavky, z ktorej vychádzaš. Čo si musel predpokladať, označ slovom PREDPOKLAD.", "g1_v": "Priprav diagram biznis a aplikačnej vrstvy v PlantUML s knižnicou ArchiMate (!include <archimate/Archimate>) tak, aby sa dal vykresliť na plantuml.com. Použi len prvky, ktoré vychádzajú z požiadaviek OUT_13.", "g2_2": "Na základe priloženej rámcovej špecifikácie navrhni osnovu detailnej funkčnej špecifikácie pre proces „Vyšetrenie klienta v poradni zdravia“ od objednania po výstupný protokol.\n\nŠtruktúra: biznis proces krok za krokom, use cases, popis funkcií, validačné pravidlá, návrh obrazoviek.\nKu každej časti priraď ID požiadaviek, ktoré pokrýva. Zatiaľ nepíš obsah.", "g2_3": "Rozpracuj use case „Zaznamenať výsledky vyšetrenia klienta“:\n– aktéri a predpoklady\n– hlavný scenár krok za krokom\n– alternatívne scenáre a výnimky\n– validačné pravidlá (FP_10, FP_12, FP_17)\n\nPri každom kroku uveď ID požiadavky. Čo v zadaní chýba, označ ako OTÁZKA PRE OBSTARÁVATEĽA.", "g2_v": "Priprav diagram aktivít procesu „Vyšetrenie klienta v poradni zdravia“ v syntaxi Mermaid (flowchart) s plaveckými dráhami pre klienta, pracovníka poradne a systém. Diagram si zobrazíte na mermaid.live.", "g3_2": "Na základe priloženej funkčnej špecifikácie a bodu 6.1.4 (príloha 02) navrhni osnovu detailnej technickej špecifikácie pre IS Test zdravé srdce.\n\nOsnova musí pokryť všetky časti, ktoré bod 6.1.4 vyžaduje. Ku každej kapitole priraď ID požiadaviek.\nNa konci vypíš, ktoré časti bodu 6.1.4 sa v tejto fáze spracovať nedajú a prečo (napr. zdrojový kód).", "g3_3": "Napíš kapitolu Cieľová architektúra a výkonnostné predpoklady:\n– komponenty riešenia a prostredia (vývoj, test, predprodukcia, produkcia vo vládnom cloude)\n– integrácie (FP_29, FP_30, FP_44, FP_45)\n– správa používateľov a autentifikácia (FP_8, FP_13, FP_16)\n– výkonnostné predpoklady pre SLA: 200 používateľov, prevádzka 8x5, dostupnosť údajov 24x7, RTO 1 týždeň\n\nNeuvádzaj konkrétne produkty, ktoré nie sú v podkladoch. Chýbajúce parametre (napr. RPO, doba odozvy) uveď ako otázky.", "g3_v": "Priprav sekvenčný diagram v PlantUML pre zaslanie výstupného protokolu klientovi (FP_42) a poskytnutie dát cez verejné API (FP_44). Pri API vyznač, kde sa musia riešiť osobné údaje.", "gMIS_2": "Navrhni dátový model pre reporting IS Test zdravé srdce ako hviezdicovú schému:\n– faktové tabuľky a ich granularita\n– dimenzie s hlavnými atribútmi\n– ktoré požiadavky model pokrýva (najmä FP_22, FP_25, FP_27, FP_34, FP_38, FP_48)\n\nZohľadni, že reporting sa podľa prílohy 03 integruje na MDM a údajové základne jednotlivých IS.", "gMIS_3": "Prepíš požiadavky FP_10 a FP_12 na pravidlá kvality dát:\npravidlo | kontrolovaný atribút | logika kontroly | závažnosť | kde sa kontroluje (zdrojový systém, ETL, MDM)\n\nDoplň 5 ďalších pravidiel, ktoré z dát vyplývajú, a označ ich ako NÁVRH.", "gMIS_v": "Predpokladaj, že sa do vyšetrenia pridá nový ukazovateľ (biochemický parameter s kritickými hodnotami podľa veku a pohlavia, FP_17).\n\nOpíš dopad zmeny na zdrojový systém, ETL, MDM, kocku a reporty a navrhni kontrolný zoznam na overenie konzistencie po nasadení zmeny."};
+document.addEventListener("click",e=>{const b=e.target.closest(".copy");if(!b)return;const t=P[b.dataset.p];
+const ok=()=>{b.textContent="Skopírované";b.classList.add("ok");setTimeout(()=>{b.textContent="Kopírovať prompt";b.classList.remove("ok")},1600)};
+if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(t).then(ok,()=>fb(t,ok));else fb(t,ok);});
+function fb(t,ok){const a=document.createElement("textarea");a.value=t;a.style.position="fixed";a.style.opacity="0";document.body.appendChild(a);a.select();try{document.execCommand("copy");ok();}catch(e){}a.remove();}
+</script></body></html>
